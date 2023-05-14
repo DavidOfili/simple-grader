@@ -1,0 +1,25 @@
+main {
+    width: 100%;
+    margin: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    justify-content: space-between;
+}
+
+form section div {
+    display: grid;
+    grid-template-columns: 230px 20px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: 120px 25px 25px;
+}
+
+.text {
+    display: none;
+}
+

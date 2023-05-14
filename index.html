@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>Simple Grader</title>
+</head>
+<body>
+    <main>
+        <h2>RUBRIC</h2>
+        <div id="grid" class="grid">
+            <form id="score-form" method="post">
+                <!-- HTML -->
+                <section>
+                    <h3>ADVANCED HTML</h3>
+                    <div>
+                        <label for="q1" class="remark">Validates without errors</label>
+                        <input type="radio" id="q1" class="score" name="Error Validation" value="5" data-price="5" onclick="myFunction()">
+                    </div>
+                    <div>
+                        <label for="q2" class="remark">Validates with minimal erros</label>
+                        <input type="radio"  id="q2" class="score" name="Error Validation" value="3" data-price="3" onclick="myFunction()">
+                    </div>
+                    <div>
+                        <label for="q3" class="remark">Validates with multiple errors</label>
+                        <input type="radio"  id="q3" class="score" name="Error Validation" value="1" data-price="1" onclick="myFunction()">
+                    </div>
+                </section>
+
+                <!-- CSS/BOOTSTRAP -->
+                <section>
+                    <h3>CSS / BOOSTRAP</h3>
+                    <div>
+                        <label for="p1" class="remark">Substantial CSS</label>
+                        <input type="radio"  id="p1" class="score" name="CSS/Bootstrap" value="3" data-price="3" onclick="myFunction()">
+                    </div>
+                    <div>
+                        <label for="p2" class="remark">Bootstrap is original</label>
+                        <input type="radio"  id="p2" class="score" name="CSS/Bootstrap" value="1" data-price="1" onclick="myFunction()">
+                    </div>
+                    <div>
+                        <label for="p3" class="remark">Bootstrap uses theme</label>
+                        <input type="radio" id="p3" class="score" name="CSS/Bootstrap" value="0" data-price="0" onclick="myFunction()">
+                    </div>
+                </section>
+
+                <!-- ACCESSIBILITY -->
+                <section>
+                    <h3>ACCESSIBILITY</h3>
+                    <div>
+                        <label for="o1" class="remark">Fully WCAG Compliant</label>
+                        <input type="radio"  id="r1" class="score" name="Accessibility" value="2.5" data-price="2.5" onclick="myFunction()">
+                    </div>
+                    <div>
+                        <label for="o2" class="remark">No structural elements</label>
+                        <input type="radio"  id="r2" class="score" name="Accessibility" value="2.1" data-price="2.1" onclick="myFunction()">
+                    </div>
+                    <div>
+                        <label for="o3" class="remark">Returns contrast errors</label>
+                        <input type="radio"  id="r3" class="score" name="Accessibility" value="1" data-price="1" onclick="myFunction()">
+                    </div>
+                </section>
+                <br><br>
+                <button id="submit" type="submit" onclick="myFunction()">Calculate</button>
+            </form>
+
+            <!-- Display 1 -->
+            <p id="summary">
+                <!-- <h2>SUMMARY</h2> -->
+            </p>
+
+            <!-- Display 2 -->
+            <p>
+                SCORE: <span id="total">--.--</span>
+            </p>
+            
+            <!-- Display 3 -->
+            <p id="comments">
+                <ul id="html">
+                    <h4>ADVANCED HTML</h4>
+                    <li id="h1" class="text">Validates without errors</li>
+                    <li id="h2" class="text">Validates with minimal erros</li>
+                    <li id="h3" class="text">Validates with multiple errors</li>
+                    <h4>CSS / BOOTSTRAP</h4>
+                    <li id="c1" class="text">Substantial CSS</li>
+                    <li id="c2" class="text">Bootstrap is original</li>
+                    <li id="c3" class="text">Bootstrap uses theme</li>
+                </ul>
+            </p>
+        </div>
+    </main>
+    <script src="jquery.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
