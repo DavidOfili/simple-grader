@@ -4,94 +4,615 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <title>Simple Grader</title>
 </head>
 <body>
     <main>
-        <h2>RUBRIC</h2>
         <div id="grid" class="grid">
+            <!-- GRADING FORM -->
             <form id="score-form" method="post">
-                <!-- HTML -->
-                <section>
-                    <h3>ADVANCED HTML</h3>
-                    <div>
-                        <label for="q1" class="remark">Validates without errors</label>
-                        <input type="radio" id="q1" class="score" name="Error Validation" value="5" data-price="5" onclick="myFunction()">
-                    </div>
-                    <div>
-                        <label for="q2" class="remark">Validates with minimal erros</label>
-                        <input type="radio"  id="q2" class="score" name="Error Validation" value="3" data-price="3" onclick="myFunction()">
-                    </div>
-                    <div>
-                        <label for="q3" class="remark">Validates with multiple errors</label>
-                        <input type="radio"  id="q3" class="score" name="Error Validation" value="1" data-price="1" onclick="myFunction()">
-                    </div>
-                </section>
+                <!-- Tabs and Tab Titles -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="html-tab" data-bs-toggle="tab" data-bs-target="#html-tab-pane" type="button" role="tab" aria-controls="html-tab-pane" aria-selected="true">ADVANCED HTML (15 Marks)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="css-tab" data-bs-toggle="tab" data-bs-target="#css-tab-pane" type="button" role="tab" aria-controls="css-tab-pane" aria-selected="false">CSS/BOOTSTRAP (5 Marks)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="javascript-tab" data-bs-toggle="tab" data-bs-target="#javascript-tab-pane" type="button" role="tab" aria-controls="javascript-tab-pane" aria-selected="false">JAVASCRIPT/LIBS (15 Marks)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="accessibility-tab" data-bs-toggle="tab" data-bs-target="#accessibility-tab-pane" type="button" role="tab" aria-controls="accessibility-tab-pane" aria-selected="false">ACCESSIBILITY (5 Marks)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="design-tab" data-bs-toggle="tab" data-bs-target="#design-tab-pane" type="button" role="tab" aria-controls="design-tab-pane" aria-selected="false">DESIGN (12 Marks)</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="evaluation-tab" data-bs-toggle="tab" data-bs-target="#evaluation-tab-pane" type="button" role="tab" aria-controls="evaluation-tab-pane" aria-selected="false">EVALUATION (8 Marks)</button>
+                    </li>
+                </ul>
 
-                <!-- CSS/BOOTSTRAP -->
-                <section>
-                    <h3>CSS / BOOSTRAP</h3>
-                    <div>
-                        <label for="p1" class="remark">Substantial CSS</label>
-                        <input type="radio"  id="p1" class="score" name="CSS/Bootstrap" value="3" data-price="3" onclick="myFunction()">
-                    </div>
-                    <div>
-                        <label for="p2" class="remark">Bootstrap is original</label>
-                        <input type="radio"  id="p2" class="score" name="CSS/Bootstrap" value="1" data-price="1" onclick="myFunction()">
-                    </div>
-                    <div>
-                        <label for="p3" class="remark">Bootstrap uses theme</label>
-                        <input type="radio" id="p3" class="score" name="CSS/Bootstrap" value="0" data-price="0" onclick="myFunction()">
-                    </div>
-                </section>
+                <!-- Score Display -->
+                <div class="score-display">
+                    SCORE: &nbsp;&nbsp; <span id="total">--.--</span> &nbsp;/&nbsp; 60
+                </div>
 
-                <!-- ACCESSIBILITY -->
-                <section>
-                    <h3>ACCESSIBILITY</h3>
-                    <div>
-                        <label for="o1" class="remark">Fully WCAG Compliant</label>
-                        <input type="radio"  id="r1" class="score" name="Accessibility" value="2.5" data-price="2.5" onclick="myFunction()">
+                <!-- Score Display -->
+                <button type="reset" id="reset" class="reset bg-danger text-white mt-3 mx-3" onclick="resetScore()">Reset Form</button>
+                
+                <!-- Tab Content -->
+                <div class="tab-content" id="myTabContent">
+                    <!-- HTML -->
+                    <div class="tab-pane fade show active" id="html-tab-pane" role="tabpanel" aria-labelledby="html-tab" tabindex="0">
+                        <section class="row mx-5 my-3 py-5">
+                            <!-- Code Validtion -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Validation</h4>
+                                <div>
+                                    <label for="ht1" class="remark">HTML validates without errors and warnings.</label>
+                                    <input type="radio" id="h1" class="score" name="HTML Code-Validation" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht2" class="remark">HTML validates without errors but with warnings.</label>
+                                    <input type="radio"  id="h2" class="score" name="HTML Code-Validation" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht3" class="remark">HTML validates with one or more errors </label>
+                                    <input type="radio"  id="h3" class="score" name="HTML Code-Validation" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                            
+                            <!-- Semantic Elements -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Semantic Elements</h4>
+                                <div>
+                                    <label for="ht4" class="remark">Semantic elements are used sufficiently and appropriately across pages.</label>
+                                    <input type="radio" id="h4" class="score" name="Semantic Elements" value="5" data-price="5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht5" class="remark">Semantic elements are used sparingly.</label>
+                                    <input type="radio"  id="h5" class="score" name="Semantic Elements" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht6" class="remark">Only one or no semantic element is used across pages, e.g., <span style="font-size: 0.9em; font-family: 'Courier New', Courier, monospace;">nav, form, figure, figcaption,</span> etc.</label>
+                                    <input type="radio"  id="h6" class="score" name="Semantic Elements" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Advanced HTML -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Advanced HTML</h4>
+                                <div>
+                                    <label for="ht7" class="remark">A web form and at least, one advanced HTML feature (e.g., geolocation, local storage, etc.) was implemented successfully. </label>
+                                    <input type="radio" id="h7" class="score" name="Advanced HTML" value="5" data-price="5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht8" class="remark">Either one of a web form or an advanced HTML feature was implemented successfully without the other. </label>
+                                    <input type="radio"  id="h8" class="score" name="Advanced HTML" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht9" class="remark">No web form and no advanced HTML feature was implemented. </label>
+                                    <input type="radio"  id="h9" class="score" name="Advanced HTML" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Code Quality -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Quality</h4>
+                                <div>
+                                    <label for="ht10" class="remark">Code is well indented and spaced with good comments.</label>
+                                    <input type="radio" id="h10" class="score" name="HTML Code-Quality" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht11" class="remark">There is inconsistency in code indentation, spacing, and commenting.</label>
+                                    <input type="radio"  id="h11" class="score" name="HTML Code-Quality" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ht12" class="remark">Little or no attention was paid to a clean and readable code.</label>
+                                    <input type="radio"  id="h12" class="score" name="HTML Code-Quality" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                        </section>
                     </div>
-                    <div>
-                        <label for="o2" class="remark">No structural elements</label>
-                        <input type="radio"  id="r2" class="score" name="Accessibility" value="2.1" data-price="2.1" onclick="myFunction()">
+
+                    <!-- CSS/BOOTSTRAP -->
+                    <div class="tab-pane fade" id="css-tab-pane" role="tabpanel" aria-labelledby="css-tab" tabindex="0">
+                        <section class="row mx-5 my-3 py-5">
+                            <!-- Code Validtion -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Validation</h4>
+                                <div>
+                                    <label for="cb1" class="remark">CSS validates without errors and warnings.</label>
+                                    <input type="radio" id="c1" class="score" name="CSS Code-Validation" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb2" class="remark">CSS validates without errors but with warnings.</label>
+                                    <input type="radio"  id="c2" class="score" name="CSS Code-Validation" value="0.5" data-price="0.5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb3" class="remark">CSS validates with errors. </label>
+                                    <input type="radio"  id="c3" class="score" name="CSS Code-Validation" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+    
+                            <!-- CSS / Bootstrap -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>CSS / Bootstrap Usage</h4>
+                                <div>
+                                    <label for="cb4" class="remark">CSS is advanced and/or Bootstrap is the student’s work, not template/theme default.</label>
+                                    <input type="radio" id="c4" class="score" name="CSS-Bootstrap" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb5" class="remark">CSS and/or Bootstrap is not advanced.</label>
+                                    <input type="radio"  id="c5" class="score" name="CSS-Bootstrap" value="0.5" data-price="0.5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb6" class="remark">Bootstrap relies heavily on a theme’s default CSS.</label>
+                                    <input type="radio"  id="c6" class="score" name="CSS-Bootstrap" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+    
+                            <!-- Responsiveness -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Responsiveness</h4>
+                                <div>
+                                    <label for="cb7" class="remark">Responsiveness was implemented using media queries and/or other CSS rules like <span style="font-size: 0.9em; font-family: 'Courier New', Courier, monospace;">box-sizing, flex-wrap, max-width,</span> etc. </label>
+                                    <input type="radio" id="c7" class="score" name="Responsiveness" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb8" class="remark">Responsiveness was implemented without media queries, but with other CSS rules like <span style="font-size: 0.9em; font-family: 'Courier New', Courier, monospace;">viewport, box-sizing, flex-wrap, max-width,</span> etc. </label>
+                                    <input type="radio"  id="c8" class="score" name="Responsiveness" value="0.5" data-price="0.5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb9" class="remark">No CSS rule was applied for responsiveness.</label>
+                                    <input type="radio"  id="c9" class="score" name="Responsiveness" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+    
+                            <!-- Code Location -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Location</h4>
+                                <div>
+                                    <label for="cb10" class="remark">All styling was done in a separate style sheet.</label>
+                                    <input type="radio" id="c10" class="score" name="Code Location" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb11" class="remark">Styling was done in a separate style sheet, as well as embedded in the HTML.</label>
+                                    <input type="radio"  id="c11" class="score" name="Code Location" value="0.5" data-price="0.5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb12" class="remark">No external style sheets.</label>
+                                    <input type="radio"  id="c12" class="score" name="Code Location" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Code Quality -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Quality</h4>
+                                <div>
+                                    <label for="cb13" class="remark">Code is well indented and spaced with good comments.</label>
+                                    <input type="radio" id="c13" class="score" name="Code Quality" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb14" class="remark">There is inconsistency in code indentation, spacing, and commenting.</label>
+                                    <input type="radio"  id="c14" class="score" name="Code Quality" value="0.5" data-price="0.5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="cb15" class="remark">Little or no attention was paid to a clean and readable code.</label>
+                                    <input type="radio"  id="c15" class="score" name="Code Quality" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                        </section>
                     </div>
-                    <div>
-                        <label for="o3" class="remark">Returns contrast errors</label>
-                        <input type="radio"  id="r3" class="score" name="Accessibility" value="1" data-price="1" onclick="myFunction()">
+
+                    <!-- JAVASCRIPT / LIBRARIES -->
+                    <div class="tab-pane fade" id="javascript-tab-pane" role="tabpanel" aria-labelledby="javascript-tab" tabindex="0">
+                        <section class="row mx-5 my-3 py-5">
+                            <!-- JavaScript Use -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>JavaScript Use</h4>
+                                <div>
+                                    <label for="jl1" class="remark">A substantial amount of JavaScript was used to implement dynamic contents.</label>
+                                    <input type="radio" id="j1" class="score" name="JavaScript Use" value="5" data-price="5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl2" class="remark">A fair amount of JavaScript was implemented successfully.</label>
+                                    <input type="radio"  id="j2" class="score" name="JavaScript Use" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl3" class="remark">No JavaScript (including JS libraries) was used.</label>
+                                    <input type="radio"  id="j3" class="score" name="JavaScript Use" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                            
+                            <!-- Code Functionality -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Functionality</h4>
+                                <div>
+                                    <label for="jl4" class="remark">JavaScript runs without errors in the terminal.</label>
+                                    <input type="radio" id="j4" class="score" name="Code Functionality" value="5" data-price="5" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl5" class="remark">JavaScript runs with some errors in the terminal, but most features still work on the website.</label>
+                                    <input type="radio"  id="j5" class="score" name="Code Functionality" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl6" class="remark">JavaScript runs with errors in the terminal and causes unexpected behaviour on the website/webpage.</label>
+                                    <input type="radio"  id="j6" class="score" name="Code Functionality" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Script Location -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Script Location</h4>
+                                <div>
+                                    <label for="jl7" class="remark">All or virtually all scripts are written in a separate JS file(s).</label>
+                                    <input type="radio" id="j7" class="score" name="Script Location" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl8" class="remark">Large amount of JavaScript is embedded in the HTML and/or other non-JS files.</label>
+                                    <input type="radio"  id="j8" class="score" name="Script Location" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl9" class="remark">No JavaScript was used.</label>
+                                    <input type="radio"  id="j9" class="score" name="Script Location" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Code Quality -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Quality</h4>
+                                <div>
+                                    <label for="jl10" class="remark">Code is well indented and spaced with good comments.</label>
+                                    <input type="radio" id="j10" class="score" name="JS Code-Quality" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl11" class="remark">There is inconsistency in code indentation, spacing, and commenting.</label>
+                                    <input type="radio"  id="j11" class="score" name="JS Code-Quality" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="jl12" class="remark">Little or no attention was paid to a clean and readable code.</label>
+                                    <input type="radio"  id="j12" class="score" name="JS Code-Quality" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                        </section>
                     </div>
-                </section>
-                <br><br>
-                <button id="submit" type="submit" onclick="myFunction()">Calculate</button>
+
+                    <!-- ACCESSIBILITY -->
+                    <div class="tab-pane fade" id="accessibility-tab-pane" role="tabpanel" aria-labelledby="accessibility-tab" tabindex="0">
+                        <section class="row mx-5 my-3 py-5">
+                            <!-- Fully Accessible -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Fully Accessible</h4>
+                                <div>
+                                    <label for="ac1" class="remark">All webpages are fully WCAG compliant and return no accessibility errors</label>
+                                    <input type="radio" id="a1" class="score" name="Accessibility" value="5" data-price="5" onclick="allComments()">
+                                </div>
+                            </section>
+                            
+                            <!-- Mostly Accessible -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Mostly Accessible</h4>
+                                <div>
+                                    <label for="ac2" class="remark">Minimal accessibility errors and good number of structural elements.</label>
+                                    <input type="radio" id="a2" class="score" name="Accessibility" value="4" data-price="4" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Fairly Accessible -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Fairly Accessible</h4>
+                                <div>
+                                    <label for="ac3" class="remark">Multiple accessibility errors, but there’s good use of structural elements and image alternative (alt) text.</label>
+                                    <input type="radio" id="a3" class="score" name="Accessibility" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Not Accessible -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Not Accessible</h4>
+                                <div>
+                                    <label for="ac4" class="remark">All webpages return multiple accessibility errors</label>
+                                    <input type="radio" id="a4" class="score" name="Accessibility" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                        </section>
+                    </div>
+                    
+                    <!-- DESIGN -->
+                    <div class="tab-pane fade" id="design-tab-pane" role="tabpanel" aria-labelledby="design-tab" tabindex="0">
+                        <section class="row mx-5 my-3 py-5">
+                            <!-- Outline and Desciption -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Outline and Desciption</h4>
+                                <div>
+                                    <label for="ds1" class="remark">Design document contains an outline or a brief description of a new set of features.</label>
+                                    <input type="radio" id="d1" class="score" name="Outline and Desciption" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds2" class="remark">Design document contains an outline with no comprehensible description of features, and outline is not self-explanatory.</label>
+                                    <input type="radio"  id="d2" class="score" name="Outline and Desciption" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds3" class="remark">Design document does not contain an outline of features.</label>
+                                    <input type="radio"  id="d3" class="score" name="Outline and Desciption" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                            
+                            <!-- Design Justification and Features Benefits -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Justification and Benefits</h4>
+                                <div>
+                                    <label for="ds4" class="remark">Document contains justification for design decisions, and benefits of features on the overall website.</label>
+                                    <input type="radio" id="d4" class="score" name="Justification and Benefits" value="4" data-price="4" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds5" class="remark">Document contains either justification for design decisions or benefits of features on the overall website, but not both.</label>
+                                    <input type="radio"  id="d5" class="score" name="Justification and Benefits" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds6" class="remark">No justification or benefits, or they are vague and/or superficial.</label>
+                                    <input type="radio"  id="d6" class="score" name="Justification and Benefits" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Academic Writing -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Academic Writing</h4>
+                                <div>
+                                    <label for="ds7" class="remark">English is mostly readable and comprehensible, word choice and grammar reflect academic writing, and text is mostly well structured and formatted.</label>
+                                    <input type="radio" id="d7" class="score" name="Academic Writing" value="3" data-price="3" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds8" class="remark">English is fairly readable and comprehensible, word choice and grammar fairly reflect academic writing, and text is mostly well structured and formatted.</label>
+                                    <input type="radio"  id="d8" class="score" name="Academic Writing" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds9" class="remark">English is largely not readable and comprehensible, word choice and grammar don’t reflect academic writing, and text is mostly well structured and formatted or not.</label>
+                                    <input type="radio"  id="d9" class="score" name="Academic Writing" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- References -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>References</h4>
+                                <div>
+                                    <label for="ds10" class="remark">References are included, and referencing style conforms to a standard citation format.</label>
+                                    <input type="radio" id="d10" class="score" name="References" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds11" class="remark">References are included but referencing style does not conform to a standard citation format.</label>
+                                    <input type="radio"  id="d11" class="score" name="References" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ds12" class="remark">No references included.</label>
+                                    <input type="radio"  id="d12" class="score" name="References" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                        </section>
+                    </div>
+                    
+                    <!-- EVALUATION -->
+                    <div class="tab-pane fade" id="evaluation-tab-pane" role="tabpanel" aria-labelledby="evaluation-tab" tabindex="0">
+                        <section class="row mx-5 my-3 py-5">
+                            <!-- Implementation and Justification -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Implementation and Justification</h4>
+                                <div>
+                                    <label for="ev1" class="remark">Design document contains an evaluation of design implementation and justifies changes between the initial design and the new design.</label>
+                                    <input type="radio" id="e1" class="score" name="Implementation and Justification" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev2" class="remark">Evaluation of design implementation and justification for changes are vague or superficial</label>
+                                    <input type="radio"  id="e2" class="score" name="Implementation and Justification" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev3" class="remark">No evaluation was provided.</label>
+                                    <input type="radio"  id="e3" class="score" name="Implementation and Justification" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                            
+                            <!-- Code Testing -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Code Testing</h4>
+                                <div>
+                                    <label for="ev4" class="remark">Design document contains an evaluation of code testing method/approach.</label>
+                                    <input type="radio" id="e4" class="score" name="Code Testing" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev5" class="remark">Evaluation of code testing approach is vague or superficial.</label>
+                                    <input type="radio"  id="e5" class="score" name="Code Testing" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev6" class="remark">No evaluation was provided.</label>
+                                    <input type="radio"  id="e6" class="score" name="Code Testing" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Responsiveness Testing -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Responsiveness Testing</h4>
+                                <div>
+                                    <label for="ev7" class="remark">Design document contains an evaluation of responsiveness testing method/approach.</label>
+                                    <input type="radio" id="e7" class="score" name="Responsiveness Testing" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev8" class="remark">Evaluation of responsiveness testing approach is vague or superficial.</label>
+                                    <input type="radio"  id="e8" class="score" name="Responsiveness Testing" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev9" class="remark">No evaluation was provided.</label>
+                                    <input type="radio"  id="e9" class="score" name="Responsiveness Testing" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+
+                            <!-- Accessibility Testing -->
+                            <section class="subsection card col-lg-6 border-1 px-3 py-3">
+                                <h4>Accessibility Testing</h4>
+                                <div>
+                                    <label for="ev10" class="remark">Design document contains an evaluation of accessibility testing method/approach.</label>
+                                    <input type="radio" id="e10" class="score" name="Accessibility Testing" value="2" data-price="2" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev11" class="remark">Evaluation of accessibility testing approach is vague or superficial.</label>
+                                    <input type="radio"  id="e11" class="score" name="Accessibility Testing" value="1" data-price="1" onclick="allComments()">
+                                </div>
+                                <div>
+                                    <label for="ev12" class="remark">No evaluation was provided.</label>
+                                    <input type="radio"  id="e12" class="score" name="Accessibility Testing" value="0" data-price="0" onclick="allComments()">
+                                </div>
+                            </section>
+                        </section>
+                    </div>
+                </div>  
             </form>
 
-            <!-- Display 1 -->
-            <p id="summary">
-                <!-- <h2>SUMMARY</h2> -->
-            </p>
 
-            <!-- Display 2 -->
-            <p>
-                SCORE: <span id="total">--.--</span>
-            </p>
-            
-            <!-- Display 3 -->
-            <p id="comments">
-                <ul id="html">
-                    <h4>ADVANCED HTML</h4>
-                    <li id="h1" class="text">Validates without errors</li>
-                    <li id="h2" class="text">Validates with minimal erros</li>
-                    <li id="h3" class="text">Validates with multiple errors</li>
-                    <h4>CSS / BOOTSTRAP</h4>
-                    <li id="c1" class="text">Substantial CSS</li>
-                    <li id="c2" class="text">Bootstrap is original</li>
-                    <li id="c3" class="text">Bootstrap uses theme</li>
-                </ul>
-            </p>
+            <!-- Score Breakdown and Student's Feedback -->
+            <section class="mx-5 my-3">
+                <!-- Score Details -->
+                <!-- <section class="score-break card col-lg-6 border-1 px-3 py-3">
+                    <h4 class="card-header fw-bold">Score Details</h4>
+                    <div id="summary" class="score-details card-body">
+                    
+                    </div>
+                    <button id="submit" type="submit">Refresh Breakdown</button>
+                </section> -->
+
+                <!-- Students' Feedback -->
+               
+                <section id="comments" class="score-details row">
+                    <div class="mb-3 py-3 px-3 bg-dark">
+                        <h4 class="card-title text-white">Feedback for the Student</h4>
+                    </div>
+                    <!-- HTML -->
+                    <div class="card col-lg-4">
+                        <ul id="html-comments" class="border-1 mb-3 px-2 py-1">
+                            <h6 class="lead">ADVANCED HTML</h6>
+                            <li id="ht1" class="text">HTML validates without errors and warnings.</label>
+                            <li id="ht2" class="text">HTML validates without errors but with warnings.</label>
+                            <li id="ht3" class="text">HTML validates with one or more errors. </label>
+                            <li id="ht4" class="text">Semantic elements are used sufficiently and appropriately across pages.</label>
+                            <li id="ht5" class="text">Semantic elements are used sparingly.</label>
+                            <li id="ht6" class="text">Only one or no semantic element is used across pages.</label>
+                            <li id="ht7" class="text">A web form and at least, one advanced HTML feature was implemented successfully. </label>
+                            <li id="ht8" class="text">Only one between a web form and an advanced HTML feature was implemented successfully without the other. </label>
+                            <li id="ht9" class="text">No web form and no advanced HTML feature was implemented. </label>
+                            <li id="ht10" class="text">Code is well indented and spaced with good comments.</label>
+                            <li id="ht11" class="text">There is inconsistency in code indentation, spacing, and commenting.</label>
+                            <li id="ht12" class="text">Little or no attention was paid to a clean and readable code.</label>
+                        </ul>
+                        <button class="copy bg-muted text-dark" onclick="htmlContent()">Copy</button> 
+                    </div>
+
+                    <!-- CSS -->
+                    <div class="card col-lg-4">
+                        <ul id="css-comments" class="border-1 mb-3 px-2 py-1">
+                            <h6 class="lead">CSS / BOOTSTRAP</h6>
+                            <li id="cb1" class="text">CSS validates without errors and warnings.</li>
+                            <li id="cb2" class="text">CSS validates without errors but with warnings.</li>
+                            <li id="cb3" class="text">CSS validates with errors. </li>
+                            <li id="cb4" class="text">CSS/Bootstrap is very good and tends to be the student’s work, not auto-generated.</li>
+                            <li id="cb5" class="text">CSS/Bootstrap shows no advanced understanding.</li>
+                            <li id="cb6" class="text">Bootstrap relies heavily on a theme’s default styling.</li>
+                            <li id="cb7" class="text">Responsiveness was implemented using media queries and/or other CSS rules like <span style="font-size: 0.9em; font-family: 'Courier New', Courier, monospace;">box-sizing, flex-wrap, max-width,</span> etc. </li>
+                            <li id="cb8" class="text">Responsiveness was implemented without media queries, but with other CSS rules like <span style="font-size: 0.9em; font-family: 'Courier New', Courier, monospace;">viewport, box-sizing, flex-wrap, max-width,</span> etc. </li>
+                            <li id="cb9" class="text">No CSS rule was applied for responsiveness.</li>
+                            <li id="cb10" class="text">All styling was done in a separate style sheet.</li>
+                            <li id="cb11" class="text">Styling was done in a separate style sheet, as well as embedded in the HTML.</li>
+                            <li id="cb12" class="text">No external style sheets.</li>
+                            <li id="cb13" class="text">Code is well indented and spaced with good comments.</li>
+                            <li id="cb14" class="text">There is inconsistency in code indentation, spacing, and commenting.</li>
+                            <li id="cb15" class="text">Little or no attention was paid to a clean and readable code.</li>
+                        </ul>
+                        <button class="copy bg-muted text-dark" onclick="cssContent()">Copy</button>
+                    </div>
+                    
+                    <!-- JAVASCRIPT -->
+                    <div class="card col-lg-4">
+                        <ul id="js-comments" class="border-1 mb-3 px-2 py-1">
+                            <h6 class="lead">JAVASCRIPT</h6>
+                            <li id="jl1" class="text">A substantial amount of JavaScript was used to implement dynamic contents.</li>
+                            <li id="jl2" class="text">A fair amount of JavaScript was implemented successfully.</li>
+                            <li id="jl3" class="text">No JavaScript (including JS libraries) was used.</li>
+                            <li id="jl4" class="text">JavaScript runs without errors in the terminal.</li>
+                            <li id="jl5" class="text">JavaScript runs with some errors in the terminal, but most features still work on the website.</li>
+                            <li id="jl6" class="text">JavaScript runs with errors in the terminal and causes unexpected behaviour on the website/webpage.</li>
+                            <li id="jl7" class="text">All or virtually all scripts are written in a separate JS file(s).</li>
+                            <li id="jl8" class="text">Large amount of JavaScript is embedded in the HTML and/or other non-JS files.</li>
+                            <li id="jl9" class="text">No JavaScript was used.</li>
+                            <li id="jl10" class="text">Code is well indented and spaced with good comments.</li>
+                            <li id="jl11" class="text">There is inconsistency in code indentation, spacing, and commenting.</li>
+                            <li id="jl12" class="text">Little or no attention was paid to a clean and readable code.</li>
+                        </ul>
+                        <button class="copy bg-muted text-dark" onclick="jsContent()">Copy</button>
+                    </div>
+                    
+                    <!-- ACCESSIBILITY -->
+                    <div class="card col-lg-4">
+                        <ul id="access-comments" class="border-1 mb-3 px-2 py-1">
+                            <h6 class="lead">ACCESSIBILITY</h6>
+                            <li id="ac1" class="text">All webpages are fully WCAG compliant and return no accessibility errors</li>
+                            <li id="ac2" class="text">Minimal accessibility errors and good number of structural elements.</li>
+                            <li id="ac3" class="text">Multiple accessibility errors, but there’s good use of structural elements and image alternative (alt) text.</li>
+                            <li id="ac4" class="text">All webpages return multiple accessibility errors</li>                    
+                        </ul>
+                        <button class="copy bg-muted text-dark" onclick="accessContent()">Copy</button> 
+                    </div>
+                
+                    <!-- DESIGN -->
+                    <div class="card col-lg-4">
+                        <ul id="design-comments" class="border-1 mb-3 px-2 py-1">
+                            <h6 class="lead">DESIGN</h6>
+                            <li id="ds1" class="text">Design document contains a descriptive outline of a new set of features.</li>
+                            <li id="ds2" class="text">Design document contains an outline with no comprehensible description of features, and outline is not self-explanatory.</li>
+                            <li id="ds3" class="text">Design document does not contain an outline of features.</li>
+                            <li id="ds4" class="text">Document contains justification for design decisions, and benefits of features on the overall website.</li>
+                            <li id="ds5" class="text">Document contains one, but not both of justification for design decisions and benefits of features on the overall website.</li>
+                            <li id="ds6" class="text">No clear justification for design decisions and benefits of features.</li>
+                            <li id="ds7" class="text">English is mostly readable and comprehensible, word choice and grammar reflect academic writing, and text is mostly well structured and formatted.</li>
+                            <li id="ds8" class="text">English is fairly readable and comprehensible, word choice and grammar fairly reflect academic writing, and text is mostly well structured and formatted.</li>
+                            <li id="ds9" class="text">Document largely does not reflect academic writing.</li>
+                            <li id="ds10" class="text">References are included and referencing style conforms to a standard citation format.</li>
+                            <li id="ds11" class="text">References are included but referencing style does not conform to a standard citation format.</li>
+                            <li id="ds12" class="text">No references included.</li>
+                        </ul>
+                        <button class="copy bg-muted text-dark" onclick="designContent()">Copy</button>
+                    </div>
+                    
+                    <!-- EVALUATION -->
+                    <div class="card col-lg-4">
+                        <ul id="evaluate-comments" class="border-1 mb-3 px-2 py-1">
+                            <h6 class="lead">EVALUATION</h6>
+                            <li id="ev1" class="text">Design document contains an evaluation of design implementation and justifies changes between the initial design and the new design.</li>
+                            <li id="ev2" class="text">Evaluation of design implementation and justification for changes are vague or superficial.</li>
+                            <li id="ev3" class="text">No evaluation for design implementation and justification for changes.</li>
+                            <li id="ev4" class="text">Design document contains an evaluation of code testing method/approach.</li>
+                            <li id="ev5" class="text">Evaluation of code testing approach is vague or superficial.</li>
+                            <li id="ev6" class="text">No evaluation for code testing.</li>
+                            <li id="ev7" class="text">Design document contains an evaluation of responsiveness testing method/approach.</li>
+                            <li id="ev8" class="text">Evaluation of responsiveness testing approach is vague or superficial.</li>
+                            <li id="ev9" class="text">No evaluation for responsiveness implementation.</li>
+                            <li id="ev10" class="text">Design document contains an evaluation of accessibility testing method/approach.</li>
+                            <li id="ev11" class="text">Evaluation of accessibility testing approach is vague or superficial.</li>
+                            <li id="ev12" class="text">No evaluation for accessibility method.</li>
+                        </ul>
+                        <button class="copy bg-muted text-dark" onclick="evaluateContent()">Copy</button>
+                    </div>                     
+                </section>
+                
+                <!-- Copy All Button -->
+                <div class="card-footer mt-2">
+                    <button class="copy bg-warning text-dark px-3 py-2" onclick="copyContent()">Copy All</button>
+                </div>
+            </section>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <script src="jquery.js"></script>
     <script src="script.js"></script>
 </body>
